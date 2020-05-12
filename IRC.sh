@@ -7,9 +7,9 @@ openstack project create --description "This is IRC Project" "${P_PROJECTN}"
 openstack user create --password "${P_PASSWORD}" "${P_USERNAME}"
 openstack role add --project "${P_PROJECTN}" --user "${P_USERNAME}" "member"
 
-#Get Ubuntu imahe and create the image
+#Get Alpine image and create the image
 wget -P /var/tmp -c http://dl-cdn.alpinelinux.org/alpine/v3.11/releases/x86_64/alpine-standard-3.11.6-x86_64.iso
-openstack image create --disk-format qcow2 --container-format bare --public --file /var/tmp/alpine-standard-3.11.6-x86_64.iso alpine-standard-3.11.6-x86_64
+openstack image create --disk-format iso --container-format bare --public --file /var/tmp/alpine-standard-3.11.6-x86_64.iso alpine-standard-3.11.6-x86_64
 
 #Create flavor
 openstack flavor create --ram 512 --disk 5 --ephemeral 5 --vcpus 1 --public micro.alpine
