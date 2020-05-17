@@ -19,3 +19,4 @@ spec:
         image: craighurley/docker-weechat
         ports:
         - containerPort: 9376
+        command: ["/bin/sh", "-ec", "while :; do echo '.'; sleep 5 ; done"]
