@@ -1,4 +1,4 @@
-## Implemented in Ubuntu Server 18.04 Bionic VM 
+## Implemented in Ubuntu Server 18.04 Bionic VM
 
 # install g++ compiler
 sudo apt install build-essential
@@ -16,7 +16,7 @@ tar -xvf "./v3.6.0.tar.gz"
 make -j2 install
 
 # set a server config file as default example one
-cp /home/ubuntu/inspircd-3.6.0/run/conf/examples/inspircd.conf.example /home/ubuntu/inspircd-3.6.0/run/conf/inspirc.conf
+cp /home/ubuntu/inspircd-3.6.0/run/conf/examples/inspircd.conf.example /home/ubuntu/inspircd-3.6.0/run/conf/inspircd.conf
 # cp ~/inspircd-3.6.0/run/conf/examples/inspircd.conf.example ~/inspircd-3.6.0/run/conf/inspirc.conf
 
 # run InspIRCd service
