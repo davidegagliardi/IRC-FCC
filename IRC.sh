@@ -19,11 +19,14 @@ openstack flavor create --ram 1024 --disk 5  --ephemeral 5 --vcpus 1 --public mi
 openstack network create netIRC --project $P_PROJECTN
 openstack network create netWeb --project $P_PROJECTN
 openstack network create netOper --project $P_PROJECTN
-openstack subnet create --network netIRC --subnet-range 10.11.12.0/25 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCLeaves
+
 openstack subnet create --network netIRC --subnet-range 10.11.8.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCHub1
 openstack subnet create --network netIRC --subnet-range 10.11.9.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCHub2
-openstack subnet create --network netWeb --subnet-range 10.11.11.0/24 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetWeb
 openstack subnet create --network netOper --subnet-range 10.11.10.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetOper
+openstack subnet create --network netWeb --subnet-range 10.11.11.0/24 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetWeb
+openstack subnet create --network netIRC --subnet-range 10.11.12.0/25 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCLeaves
+
+
 openstack router create routerIntra --project $P_PROJECTN
 openstack router create routerExtra --project $P_PROJECTN
 openstack router create routerHub1 --project $P_PROJECTN
