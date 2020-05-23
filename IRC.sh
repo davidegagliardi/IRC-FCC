@@ -25,6 +25,18 @@ openstack router create routerExtra
 openstack router add subnet routerIntra subnetIRC subnetWeb
 openstack router add subnet routerExtra subnetIRC subnetWeb public
 
+#Security groups
+openstack security group create IRCGroup --project $P_PROJECTN
+openstack security group create WebGroup --project $P_PROJECTN
+
+openstack security group rule create IRCGroup --protocol tcp --dst-port 6667:6667 7000:7000 --remote-ip 0.0.0.0/0
+openstack security group rule create WebGroup --protocol tcp --dst-port 80:80 --remote-ip 0.0.0.0/0
+
+#Allow only webserver to wget the file from IRC Server
+openstack security group rule create IRCGroup --protocol tcp --dst-port 80:80 --remote-group WebGroup
+
+
+
 #Create server
 openstack server create --flavor mini.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --user-data irc1.txt --security-group default IRC-Server-1
 openstack server create --flavor mini.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --user-data irc2.txt --security-group default IRC-Server-2
