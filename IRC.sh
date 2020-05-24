@@ -8,42 +8,51 @@ openstack user create --password "${P_PASSWORD}" "${P_USERNAME}"
 openstack role add --project "${P_PROJECTN}" --user "${P_USERNAME}" "member"
 
 #Get Ubuntu image and create the image
-wget -P /var/tmp -c https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
-openstack image create --disk-format qcow --container-format bare --public --file /var/tmp/bionic-server-cloudimg-amd64.img bionic-server-cloudimg-amd64
+#wget -P /var/tmp -c https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
+#openstack image create --disk-format qcow --container-format bare --public --file /var/tmp/bionic-server-cloudimg-amd64.img bionic-server-cloudimg-amd64
 
 #Create flavor
 openstack flavor create --ram 512 --disk 5  --ephemeral 5 --vcpus 1 --public micro.ubuntu --project $P_PROJECTN
 openstack flavor create --ram 1024 --disk 5  --ephemeral 5 --vcpus 1 --public mini.ubuntu --project $P_PROJECTN
 
 #Network
-openstack network create netIRC --project $P_PROJECTN
+openstack network create netIRCHub1 --project $P_PROJECTN
+openstack network create netIRCHub2 --project $P_PROJECTN
+openstack network create netIRCLeaves --project $P_PROJECTN
 openstack network create netWeb --project $P_PROJECTN
 openstack network create netOper --project $P_PROJECTN
 
-openstack subnet create --network netIRC --subnet-range 10.11.8.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCHub1 --project $P_PROJECTN
-openstack subnet create --network netIRC --subnet-range 10.11.9.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCHub2 --project $P_PROJECTN
-openstack subnet create --network netOper --subnet-range 10.11.10.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetOper --project $P_PROJECTN
+openstack subnet create --network netIRCHub1 --no-dhcp --subnet-range 10.11.8.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCHub1 --project $P_PROJECTN
+openstack subnet create --network netIRCHub2 --no-dhcp --subnet-range 10.11.9.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCHub2 --project $P_PROJECTN
+openstack subnet create --network netOper --subnet-range 10.11.10.0/28 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetOper --project $P_PROJECTN
 openstack subnet create --network netWeb --subnet-range 10.11.11.0/29 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetWeb --project $P_PROJECTN
-openstack subnet create --network netIRC --subnet-range 10.11.12.0/25 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCLeaves --project $P_PROJECTN
+openstack subnet create --network netIRCLeaves --subnet-range 10.11.12.0/25 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCLeaves --project $P_PROJECTN
+
+#openstack port create --network netIRCHubs --allowed-address ip-address=10.11.8.2 --fixed-ip subnet=subnetIRCHub1,ip-address=10.11.8.2 IRCHub1Port
+#openstack port create --network netIRCHubs --fixed-ip subnet=subnetIRCHub2,ip-address=10.11.9.2 IRCHub2Port
 
 
-openstack router create routerIntra --project $P_PROJECTN
-openstack router create routerExtra --project $P_PROJECTN
+
+#openstack router create routerExtra --project $P_PROJECTN
 
 #openstack router create routerHub1 --project $P_PROJECTN
 #openstack router create routerHub2 --project $P_PROJECTN
 #openstack router add subnet routerHub1 subnetIRCLeaves subnetIRCHub1 subnetIRCHub2 subnetWeb subnetOper
 #openstack router add subnet routerHub2 subnetIRCLeaves subnetIRCHub1 subnetIRCHub2 subnetWeb subnetOper
-openstack router add subnet routerIntra subnetIRCLeaves
-openstack router add subnet routerIntra subnetIRCHub1
-openstack router add subnet routerIntra subnetIRCHub2
-openstack router add subnet routerIntra subnetWeb
-openstack router add subnet routerIntra subnetOper
 
-openstack router set routerExtra --fixed-ip 10.11.12.2 subnet
-openstack router set --fixed-ip subnet=subnetIRCLeaves, --ip-address=10.11.12.2 routerExtra
+openstack router create Vrouter --project $P_PROJECTN
+openstack router add subnet Vrouter subnetIRCLeaves
+openstack router add subnet Vrouter subnetIRCHub1
+openstack router add subnet Vrouter subnetIRCHub2
+openstack router add subnet Vrouter subnetWeb
+openstack router add subnet Vrouter subnetOper
+openstack router set --external-gateway public Vrouter
+
+#openstack router set routerExtra --fixed-ip 10.11.12.2 subnet
+#openstack router set --fixed-ip subnet=subnetIRCLeaves, --ip-address=10.11.12.2 routerExtra
 openstack router add subnet routerExtra subnetIRCHub1
 openstack router add subnet routerExtra subnetIRCHub2
+openstack router add subnet routerExtra subnetIRCLeaves
 openstack router add subnet routerExtra subnetWeb
 openstack router add subnet routerExtra public
 
@@ -58,9 +67,16 @@ openstack security group rule create WebGroup --protocol tcp --dst-port 80:80 --
 #Allow only webserver to wget the file from IRC Server
 openstack security group rule create IRCGroup --protocol tcp --dst-port 80:80 --remote-group WebGroup
 
+openstack server create --flavor mini.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --nic v4-fixed-ip=10.11.12.7 --security-group default IRC-Server-1
+
+#Floating IPs
+openstack floating ip create --floating-ip-address 172.24.4.2 --project $P_PROJECTN
+openstack server add floating ip e117b897-d20d-484d-b8c6-14611f5e6ae4 172.24.4.2
+
 
 #Create server
 #openstack server create --flavor mini.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --user-data irc1.txt --security-group default IRC-Server-1
 #openstack server create --flavor mini.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --user-data irc2.txt --security-group default IRC-Server-2
 #openstack server create --flavor micro.ubuntu --image bionic-server-cloudimg-amd64 --network netWeb --user-data web.txt --security-group default WebServer
 #openstack server create --flavor micro.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --user-data operator.txt --security-group default Operator
+--image bionic-server-cloudimg-amd64 --network netIRCHubs --security-group default IRC-Server-1
