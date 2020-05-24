@@ -46,7 +46,9 @@ openstack security group rule create WebGroup --protocol tcp --dst-port 80:80 --
 #Allow only webserver to wget the file from IRC Server
 openstack security group rule create IRCGroup --protocol tcp --dst-port 80:80 --remote-group WebGroup
 
-
+#Floating IPs
+openstack floating ip create --floating-ip-address 172.24.4.2 --project $P_PROJECTN
+openstack server add floating ip e117b897-d20d-484d-b8c6-14611f5e6ae4 172.24.4.2
 
 #Create server
 #openstack server create --flavor mini.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --user-data irc1.txt --security-group default IRC-Server-1
