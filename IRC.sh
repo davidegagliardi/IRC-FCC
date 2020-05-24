@@ -9,7 +9,9 @@ openstack role add --project "${P_PROJECTN}" --user "${P_USERNAME}" "member"
 
 #Get Ubuntu image and create the image
 #wget -P /var/tmp -c https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
-#openstack image create --disk-format qcow --container-format bare --public --file /var/tmp/bionic-server-cloudimg-amd64.img bionic-server-cloudimg-amd64
+wget -P /var/tmp -c https://cloud-images.ubuntu.com/minimal/releases/bionic/release/ubuntu-18.04-minimal-cloudimg-amd64.img
+#openstack image create --disk-format qcow2 --container-format bare --public --file /var/tmp/bionic-server-cloudimg-amd64.img bionic-server-cloudimg-amd64
+openstack image create --disk-format qcow2 --container-format bare --public --file /var/tmp/ubuntu-18.04-minimal-cloudimg-amd64.img ubuntu-18.04-minimal-cloudimg-amd64
 
 #Create flavor
 openstack flavor create --ram 512 --disk 5  --ephemeral 5 --vcpus 1 --public micro.ubuntu --project $P_PROJECTN
@@ -40,13 +42,24 @@ openstack subnet create --network netIRCLeaves --subnet-range 10.11.12.0/25 --dn
 #openstack router add subnet routerHub1 subnetIRCLeaves subnetIRCHub1 subnetIRCHub2 subnetWeb subnetOper
 #openstack router add subnet routerHub2 subnetIRCLeaves subnetIRCHub1 subnetIRCHub2 subnetWeb subnetOper
 
-openstack router create Vrouter --project $P_PROJECTN
-openstack router add subnet Vrouter subnetIRCLeaves
-openstack router add subnet Vrouter subnetIRCHub1
-openstack router add subnet Vrouter subnetIRCHub2
-openstack router add subnet Vrouter subnetWeb
-openstack router add subnet Vrouter subnetOper
-openstack router set --external-gateway public Vrouter
+openstack router create RouterIRCHub1 --project $P_PROJECTN
+openstack router create RouterIRCHub2 --project $P_PROJECTN
+openstack router create RouterIRCLeaves --project $P_PROJECTN
+openstack router create RouterWeb --project $P_PROJECTN
+openstack router create RouterOper --project $P_PROJECTN
+
+openstack router add subnet RouterIRCHub1 subnetIRCHub1
+openstack router add subnet RouterIRCHub2 subnetIRCHub2
+openstack router add subnet RouterIRCLeaves subnetIRCLeaves
+openstack router add subnet RouterWeb subnetWeb
+openstack router add subnet RouterOper subnetOper
+
+
+openstack router set --external-gateway public RouterIRCHub1
+openstack router set --external-gateway public RouterIRCHub2
+openstack router set --external-gateway public RouterIRCLeaves
+openstack router set --external-gateway public RouterWeb
+openstack router set --external-gateway public RouterOper
 
 #openstack router set routerExtra --fixed-ip 10.11.12.2 subnet
 #openstack router set --fixed-ip subnet=subnetIRCLeaves, --ip-address=10.11.12.2 routerExtra
@@ -81,3 +94,11 @@ openstack server add floating ip --fixed-ip-address 10.11.9.2 Hub2 172.24.4.92
 #openstack server create --flavor micro.ubuntu --image bionic-server-cloudimg-amd64 --network netWeb --user-data web.txt --security-group default WebServer
 #openstack server create --flavor micro.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --user-data operator.txt --security-group default Operator
 --image bionic-server-cloudimg-amd64 --network netIRCHubs --security-group default IRC-Server-1
+
+
+
+#WebServer
+openstack server create --flavor micro.ubuntu --image bionic-server-cloudimg-amd64 --key-name cloudkey --network netWeb WebServer
+openstack floating ip create --floating-ip-address 172.24.4.200 --project $P_PROJECTN public
+#Obtain IP
+openstack server add floating ip --fixed-ip-address 10.11.8.2 Hub1 172.24.4.200
