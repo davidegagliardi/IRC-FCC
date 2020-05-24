@@ -20,32 +20,43 @@ openstack network create netIRC --project $P_PROJECTN
 openstack network create netWeb --project $P_PROJECTN
 openstack network create netOper --project $P_PROJECTN
 
-openstack subnet create --network netIRC --subnet-range 10.11.8.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCHub1
-openstack subnet create --network netIRC --subnet-range 10.11.9.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCHub2
-openstack subnet create --network netOper --subnet-range 10.11.10.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetOper
-openstack subnet create --network netWeb --subnet-range 10.11.11.0/24 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetWeb
-openstack subnet create --network netIRC --subnet-range 10.11.12.0/25 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCLeaves
+openstack subnet create --network netIRC --subnet-range 10.11.8.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCHub1 --project $P_PROJECTN
+openstack subnet create --network netIRC --subnet-range 10.11.9.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCHub2 --project $P_PROJECTN
+openstack subnet create --network netOper --subnet-range 10.11.10.0/30 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetOper --project $P_PROJECTN
+openstack subnet create --network netWeb --subnet-range 10.11.11.0/29 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetWeb --project $P_PROJECTN
+openstack subnet create --network netIRC --subnet-range 10.11.12.0/25 --dns-nameserver 208.67.222.222 --dns-nameserver 208.67.220.220 subnetIRCLeaves --project $P_PROJECTN
 
 
 openstack router create routerIntra --project $P_PROJECTN
 openstack router create routerExtra --project $P_PROJECTN
-openstack router create routerHub1 --project $P_PROJECTN
-openstack router create routerHub2 --project $P_PROJECTN
-openstack router add subnet routerHub1 subnetIRCLeaves subnetIRCHub1 subnetIRCHub2 subnetWeb subnetOper
-openstack router add subnet routerHub2 subnetIRCLeaves subnetIRCHub1 subnetIRCHub2 subnetWeb subnetOper
-openstack router add subnet routerIntra subnetIRCLeaves subnetIRCHub1 subnetIRCHub2 subnetWeb subnetOper
-openstack router add subnet routerExtra subnetIRCLeaves subnetIRCHub1 subnetIRCHub2 subnetWeb public
+
+#openstack router create routerHub1 --project $P_PROJECTN
+#openstack router create routerHub2 --project $P_PROJECTN
+#openstack router add subnet routerHub1 subnetIRCLeaves subnetIRCHub1 subnetIRCHub2 subnetWeb subnetOper
+#openstack router add subnet routerHub2 subnetIRCLeaves subnetIRCHub1 subnetIRCHub2 subnetWeb subnetOper
+openstack router add subnet routerIntra subnetIRCLeaves
+openstack router add subnet routerIntra subnetIRCHub1
+openstack router add subnet routerIntra subnetIRCHub2
+openstack router add subnet routerIntra subnetWeb
+openstack router add subnet routerIntra subnetOper
+
+openstack router set routerExtra --fixed-ip 10.11.12.2 subnet
+openstack router set --fixed-ip subnet=subnetIRCLeaves, --ip-address=10.11.12.2 routerExtra
+openstack router add subnet routerExtra subnetIRCHub1
+openstack router add subnet routerExtra subnetIRCHub2
+openstack router add subnet routerExtra subnetWeb
+openstack router add subnet routerExtra public
 
 #Security groups
 openstack security group create IRCGroup --project $P_PROJECTN
 openstack security group create WebGroup --project $P_PROJECTN
 
-openstack security group rule create IRCGroup --protocol tcp --dst-port 6667:6667 --dst-port 7000:7000 --remote-ip 0.0.0.0/0
+openstack security group rule create IRCGroup --protocol tcp --dst-port 7000:7000 --remote-ip 10.11.0.0/16
+openstack security group rule create IRCGroup --protocol tcp --dst-port 6667:6667 --remote-ip 0.0.0.0/0
 openstack security group rule create WebGroup --protocol tcp --dst-port 80:80 --remote-ip 0.0.0.0/0
 
 #Allow only webserver to wget the file from IRC Server
 openstack security group rule create IRCGroup --protocol tcp --dst-port 80:80 --remote-group WebGroup
-
 
 
 #Create server
