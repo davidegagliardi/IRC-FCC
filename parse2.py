@@ -1,12 +1,12 @@
 #!/usr/bin/python
 file = open('index.html', 'w')
-
 titolohub1 = "InspIRCd Server Hub 1 Logs"
 file.write('<h1>' + titolohub1 + '</h1>\n')
 file.write('<table border="5">\n')
 file.close()
 f = open('logs/logs1.txt')
-for line in iter(f):
+lettura = f.readlines()
+for line in iter(lettura):
     giorno      = line.split(" ") [0]
     mese        = line.split(" ") [1]
     ngiorno     = line.split(" ") [2]
@@ -21,14 +21,13 @@ for line in iter(f):
 
 file = open('index.html', 'a')
 file.write('</table>\n')
-file.close()
-
 titolohub2 = "InspIRCd Server HUb 2 Logs"
 file.write('<h1>' + titolohub2 + '</h1>\n')
 file.write('<table border="5">\n')
 file.close()
 f = open('logs/logs2.txt')
-for line in iter(f):
+lettura = f.readlines()
+for line in iter(lettura):
     giorno      = line.split(" ") [0]
     mese        = line.split(" ") [1]
     ngiorno     = line.split(" ") [2]
