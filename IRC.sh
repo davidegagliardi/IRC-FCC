@@ -70,9 +70,10 @@ openstack security group rule create IRCGroup --protocol tcp --dst-port 80:80 --
 openstack server create --flavor mini.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --nic v4-fixed-ip=10.11.12.7 --security-group default IRC-Server-1
 
 #Floating IPs
-openstack floating ip create --floating-ip-address 172.24.4.2 --project $P_PROJECTN
-openstack server add floating ip e117b897-d20d-484d-b8c6-14611f5e6ae4 172.24.4.2
-
+openstack floating ip create --floating-ip-address 172.24.4.82 --project $P_PROJECTN public
+openstack floating ip create --floating-ip-address 172.24.4.92 --project $P_PROJECTN public
+openstack server add floating ip --fixed-ip-address 10.11.8.2 Hub1 172.24.4.82
+openstack server add floating ip --fixed-ip-address 10.11.9.2 Hub2 172.24.4.92
 
 #Create server
 #openstack server create --flavor mini.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --user-data irc1.txt --security-group default IRC-Server-1
