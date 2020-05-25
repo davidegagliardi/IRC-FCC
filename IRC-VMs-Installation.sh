@@ -13,13 +13,16 @@ openstack server create --flavor micro.ubuntu --image WebServer       --network 
 openstack server create --flavor micro.ubuntu --image IRC-Client      --network netOper       --key-name cloudkey   --security-group IRCClient --security-group SSH --security-group PING --wait ClientOper
 
 #Floating IPs association
-openstack server add floating ip IRC-Leaf-1   172.24.4.1
+openstack server add floating ip IRC-Leaf-1   172.24.4.150
 openstack server add floating ip IRC-Hub-1    172.24.4.200
 openstack server add floating ip IRC-Hub-2    172.24.4.201
 openstack server add floating ip WebServer    172.24.4.220
 openstack server add floating ip ClientOper   172.24.4.230
 
-#Leaf configuration (create link config for both hubs)
 #Hub1 configuration (create link config to hub2)
+
 #Hub2 configuration (create link config to hub1)
+
+#Leaf configuration (create link config for both hubs)
+
 #Webserver configuration (set hubs's IP address inside /home/ubuntu/sync/sync.sh)
