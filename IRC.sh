@@ -1,6 +1,6 @@
-P_USERNAME=IRC-user
-P_PASSWORD=IRC
-P_PROJECTN=IRC-project
+$P_USERNAME=IRC-user
+$P_PASSWORD=IRC
+$P_PROJECTN=IRC-project
 
 # Project creation and user creation
 openstack project create --description "This is IRC Project" "${P_PROJECTN}"
@@ -102,7 +102,6 @@ openstack server add floating ip --fixed-ip-address 10.11.9.2 Hub2 172.24.4.92
 #openstack server create --flavor mini.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --user-data irc2.txt --security-group default IRC-Server-2
 #openstack server create --flavor micro.ubuntu --image bionic-server-cloudimg-amd64 --network netWeb --user-data web.txt --security-group default WebServer
 #openstack server create --flavor micro.ubuntu --image bionic-server-cloudimg-amd64 --network netIRC --user-data operator.txt --security-group default Operator
---image bionic-server-cloudimg-amd64 --network netIRCHubs --security-group default IRC-Server-1
 
 
 

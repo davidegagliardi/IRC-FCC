@@ -1,5 +1,5 @@
 #Variables
-P_PROJECTN=IRC-project
+$P_PROJECTN=IRC-project
 
 
 #Network

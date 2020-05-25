@@ -1,5 +1,5 @@
 #Variables
-P_PROJECTN=IRC-project
+$P_PROJECTN=IRC-project
 
 #Hub1 Instance Creation
 openstack server create --flavor mini.ubuntu  --image IRCHub-Server   --network netIRCHub1    --key-name cloudkey   --security-group IRCServer --security-group SSH --security-group PING IRC-Hub-1
