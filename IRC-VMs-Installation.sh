@@ -1,5 +1,5 @@
 #Variables
-$P_PROJECTN=IRC-project
+P_PROJECTN=IRC-project
 
 #Hub1 Instance Creation
 openstack server create --flavor mini.ubuntu  --image IRCHub-Server   --network netIRCHub1    --key-name cloudkey   --security-group IRCServer --security-group SSH --security-group PING IRC-Hub-1
@@ -18,6 +18,11 @@ openstack server add floating ip IRC-Hub-1    172.24.4.200
 openstack server add floating ip IRC-Hub-2    172.24.4.201
 openstack server add floating ip WebServer    172.24.4.220
 openstack server add floating ip ClientOper   172.24.4.230
+
+##Variables extraction
+IP_HUB1=$(openstack server list -c Networks -c Name --format value | grep -Po '10\.11\.8\.[[:digit:]]*')
+IP_HUB2=$(openstack server list -c Networks -c Name --format value | grep -Po '10\.11\.9\.[[:digit:]]*')
+IP_LEAF1=$(openstack server list -c Networks -c Name --format value | grep -Po '10\.11\.12\.[[:digit:]]*')
 
 #Hub1 configuration (create link config to hub2)
 ssh -i cloud.key ubuntu@172.24.4.200 -t "sed -i 's/<define name=\"servername\" value=\"change\">/<define name=\"servername\" value=\"hub1\">/g' /home/ubuntu/inspircd-3.6.0/run/conf/inspircd.conf"

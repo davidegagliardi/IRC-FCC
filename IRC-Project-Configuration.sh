@@ -1,7 +1,7 @@
 #Variables
-$P_USERNAME=IRC-user
-$P_PASSWORD=IRC
-$P_PROJECTN=IRC-project
+P_USERNAME=IRC-user
+P_PASSWORD=IRC
+P_PROJECTN=IRC-project
 
 #Project creation and User Creation and Assignment
 openstack project create --description "This is IRC Project" "${P_PROJECTN}"
