@@ -1,0 +1,4 @@
+Wed May 20 2020 21:53:23 core_dns: cache: Checking cache for 204.1.235.10.in-addr.arpa
+Wed May 20 2020 21:53:24 CONNECT: Client connecting on port 6667 (class main): user!user@10.235.1.204 (10.235.1.204) [user]
+Wed May 20 2020 22:16:12 QUIT: Client exiting: user!user@10.235.1.204 (10.235.1.204) [Quit: WeeChat 2.5]
+Wed May 20 2020 22:30:16 MODULE: Module core_channel.so unloaded
