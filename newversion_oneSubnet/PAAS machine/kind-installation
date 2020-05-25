@@ -1,0 +1,28 @@
+# download kind binary
+wget https://github.com/kubernetes-sigs/kind/releases/download/v0.3.0/kind-linux-amd64
+
+# move the kind binary into your $PATH and make it available on your server
+sudo mv kind-linux-amd64 /usr/local/bin/kind
+
+# add permission for execution of kind binary
+sudo chmod a+x /usr/local/bin/kind
+
+# check that kind is working on your server
+kind --help
+
+# download kubectl
+KC_REL=v1.14.2
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$KC_REL/bin/linux/amd64/kubectl
+
+# make the kubectl binary executable
+chmod +x ./kubectl
+
+# move the binary in to your $PATH
+sudo mv ./kubectl /usr/local/bin/kubectl
+
+# test to ensure the version you installed is working fine
+kubectl version
+
+# get the kubectl completion code and make it persistent
+kubectl completion bash >> ~/.bashrc
+source $HOME/.bashrc

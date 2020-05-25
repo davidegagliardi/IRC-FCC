@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ircclient-service
+spec:
+  selector:
+    app: irc-client
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376

@@ -1,0 +1,41 @@
+# link to server
+<link
+      # name: The name of the remote server. This must match
+      # the <server:name> value of the remote server.
+      name="dog.omega.example.org"
+
+      # ipaddr: The IP address of the remote server.
+      # Can also be a hostname, but hostname must resolve.
+      ipaddr="10.11.12.122"
+
+      # port: The port to connect to the server on.
+      # It must be bound as a server port on the other server.
+      #port="7000"
+
+      # allowmask: Range of IP addresses to allow for this link.
+      # Can be a CIDR (see example).
+      allowmask="10.11.12.0/24 127.0.0.0/8 172.24.4.0/24"
+
+      # timeout: If defined, this option defines how long the server
+      # will wait to consider the connect attempt failed and try the
+      # failover (see above).
+      timeout="2m"
+
+      # statshidden: Defines if IP is shown to opers when
+      # /STATS c is invoked.
+      statshidden="no"
+
+      # hidden: If this is set to yes, this server and its "child"
+      # servers will not be shown when users do a /MAP or /LINKS.
+      hidden="no"
+
+      # passwords: The passwords we send and receive.
+      # The remote server will have these passwords reversed.
+      # Passwords that contain a space character or begin with
+      # a colon (:) are invalid and may not be used.
+      sendpass="outgoing!password"
+      recvpass="incoming!password">
+
+# Once you have edited this file you can remove this line. This is just to
+# ensure that you don't hastily include the file without reading it.
+#<die reason="Using links.conf.example without editing it is a security risk">

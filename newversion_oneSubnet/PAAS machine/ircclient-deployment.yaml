@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ircclient-deployment
+  labels:
+    app: irc-client
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: irc-client
+  template:
+    metadata:
+      labels:
+        app: irc-client
+    spec:
+      containers:
+      - name: ircclient
+        image: craighurley/docker-weechat
+        ports:
+        - containerPort: 9376
+        command: ["/bin/sh", "-ec", "while :; do echo '.'; sleep 5 ; done"]
