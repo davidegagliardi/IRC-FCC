@@ -28,9 +28,20 @@ openstack router add subnet VRout subnetOper
 openstack router set --external-gateway public VRout
 
 #Security group
-openstack security group create IRCGroup --project $P_PROJECTN
-openstack security group create WebGroup --project $P_PROJECTN
+openstack security group create IRCServer --project $P_PROJECTN
+openstack security group create IRCClient --project $P_PROJECTN
+openstack security group create WebGroup  --project $P_PROJECTN
+openstack security group create SSH       --project $P_PROJECTN
+openstack security group create PING      --project $P_PROJECTN
 
-openstack security group rule create IRCGroup --protocol tcp --dst-port 7000:7000 --remote-ip 10.11.0.0/16
-openstack security group rule create IRCGroup --protocol tcp --dst-port 6667:6667 --remote-ip 0.0.0.0/0
-openstack security group rule create WebGroup --protocol tcp --dst-port 80:80     --remote-ip 0.0.0.0/0
+openstack security group rule create IRCServer --protocol tcp --dst-port 7000:7000 --remote-ip 10.11.0.0/16
+openstack security group rule create IRCServer --protocol tcp --dst-port 6667:6667 --remote-ip 0.0.0.0/0
+openstack security group rule create IRCServer --protocol tcp --dst-port 80:80     --remote-ip 10.11.11.0/24
+
+openstack security group rule create IRCClient --protocol tcp --dst-port 6667:6667 --remote-ip 0.0.0.0/0
+
+openstack security group rule create WebGroup --protocol tcp  --dst-port 80:80     --remote-ip 0.0.0.0/0
+
+openstack security group rule create SSH      --protocol tcp  --dst-port 22:22     --remote-ip 0.0.0.0/0
+
+openstack security group rule create PING     --protocol icmp                      --remote-ip 0.0.0.0/0
