@@ -45,3 +45,10 @@ openstack security group rule create WebGroup --protocol tcp  --dst-port 80:80  
 openstack security group rule create SSH      --protocol tcp  --dst-port 22:22     --remote-ip 0.0.0.0/0
 
 openstack security group rule create PING     --protocol icmp                      --remote-ip 0.0.0.0/0
+
+#Floating IPs
+openstack floating ip create --floating-ip-address 172.24.4.1   --project $P_PROJECTN public
+openstack floating ip create --floating-ip-address 172.24.4.200 --project $P_PROJECTN public
+openstack floating ip create --floating-ip-address 172.24.4.201 --project $P_PROJECTN public
+openstack floating ip create --floating-ip-address 172.24.4.220 --project $P_PROJECTN public
+openstack floating ip create --floating-ip-address 172.24.4.230 --project $P_PROJECTN public
