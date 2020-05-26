@@ -7,6 +7,6 @@ chown -R ubuntu:ubuntu /var/www
 
 
 #Aggiungere al crontab
-* * * * * wget -O -P  /var/www/html/logs 10.11.12.122/logs.txt >/dev/null 2>&1
+* * * * * wget -O /var/www/html/logs 10.11.12.122/logs.txt >/dev/null 2>&1
 * * * * * sh /home/ubuntu/sync/sync.sh >/dev/null 2>&1
 * * * * * python3  /var/www/html/parse.py >/dev/null 2>&1
