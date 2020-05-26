@@ -16,17 +16,17 @@ IP_HUB2=$(openstack server list -c Networks -c Name --format value | grep -Po '1
 IP_LEAF1=$(openstack server list -c Networks -c Name --format value | grep -Po '10\.11\.12\.[[:digit:]]*')
 
 #Refresh SSH connection
-sudo ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.150"
-sudo ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.200"
-sudo ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.201"
-sudo ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.220"
-sudo ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.230"
+ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.150"
+ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.200"
+ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.201"
+ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.220"
+ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.230"
 
-sudo ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.150"
-sudo ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.200"
-sudo ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.201"
-sudo ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.220"
-sudo ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.230"
+ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.150"
+ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.200"
+ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.201"
+ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.220"
+ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.230"
 
 sudo chown davide.gagliardi:davide.gagliardi /home/davide.gagliardi/.ssh/known_hosts
 sudo chown andrea.abriani-1:andrea.abriani-1 /home/andrea.abriani-1/.ssh/known_hosts
@@ -38,7 +38,7 @@ ssh -i cloud.key ubuntu@172.24.4.200 -t "sed -i 's/<autoconnect period=\"20s\" s
 ssh -i cloud.key ubuntu@172.24.4.200 -t "sed -i 's/<autoconnect period=\"3m\" server=\"hubN.omega.example.org hubN.omega.example.org\">/<autoconnect period=\"3m\" server=\"hub2.omega.example.org hub2.omega.example.org\">/g' /home/ubuntu/inspircd-3.6.0/run/conf/links.conf"
 #add leaf link to hub1
 ssh -i cloud.key ubuntu@172.24.4.200 -t "sed -i '1i <link name=\"ircserver1.omega.example.org\" ipaddr=\"$IP_LEAF1\" port=\"7000\" allowmask=\"10.11.12.0/24\" timeout=\"2m\" statshidden=\"no\" hidden=\"no\" sendpass=\"password2\" recvpass=\"password1\">' /home/ubuntu/inspircd-3.6.0/run/conf/links.conf"
-
+####CONTROLLARE ALLOWMASK
 
 
 #Hub2 configuration (create link config to hub1)
@@ -75,6 +75,6 @@ ssh -i cloud.key ubuntu@172.24.4.150 -t "cd /home/ubuntu/inspircd-3.6.0/run/ ; .
 #ssh -i cloud.key ubuntu@172.24.4.201 -t "cd /home/ubuntu/inspircd-3.6.0/run/ ; ./inspircd stop "
 #ssh -i cloud.key ubuntu@172.24.4.150 -t "cd /home/ubuntu/inspircd-3.6.0/run/ ; ./inspircd stop "
 
-##Webserver configuration (set hubs's IP address inside /home/ubuntu/sync/sync.sh)
+##Webserver configuration (set hubs's IP address inside /home/ubuntu/sync/syn
 ssh -i cloud.key ubuntu@172.24.4.220 -t "sed -i '0,/10.11.12.122/s//$IP_HUB1/' /home/ubuntu/sync/sync.sh"
 ssh -i cloud.key ubuntu@172.24.4.220 -t "sed -i '0,/10.11.12.122/s//$IP_HUB2/' /home/ubuntu/sync/sync.sh"
