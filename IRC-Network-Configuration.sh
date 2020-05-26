@@ -1,3 +1,16 @@
+#+----------------------------------------------+
+#|              Univerity of Trento             |
+#|        Cloud and Network Infrastructure      |
+#|                  A.Y. 2019/2020              |
+#|         Fog and Cloud Computing Course       |
+#|    Authors:                                  |
+#|    - Andrea Abriani                          |
+#|    - Davide Gagliardi                        |
+#+----------------------------------------------+
+
+#ATTENTION: THIS DOCUMENT FOLLOWS IRC-Project-Configuration.sh
+
+
 #Variables
 P_PROJECTN=IRC-project
 

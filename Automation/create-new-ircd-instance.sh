@@ -1,4 +1,4 @@
-source login-IRC-project.sh
+source login-IRC-admin.sh
 EX_IRCD=$(openstack server list -c Networks -c Name --format value | grep -Po '10\.11\.12\.[[:digit:]]*')
 OLD_ID=$(wc -w <<< $EX_IRCD)
 NEW_ID=$((OLD_ID + 1))
@@ -25,5 +25,5 @@ openstack server add floating ip --fixed-ip-address $IP_VM IRC-Server-$NEW_ID $F
 ssh -i cloud.key ubuntu@$FLOATIP_HUB1 -t "sed -i '1i <link name=\"ircserver$NEW_ID.omega.example.org\" ipaddr=\"$IP_VM\" port=\"7000\" allowmask=\"10.11.12.0/25\" timeout=\"2m\" statshidden=\"no\" hidden=\"no\" sendpass=\"password2\" recvpass=\"password1\">' /home/ubuntu/inspircd-3.6.0/run/conf/links.conf"
 ssh -i cloud.key ubuntu@$FLOATIP_HUB2 -t "sed -i '1i <link name=\"ircserver$NEW_ID.omega.example.org\" ipaddr=\"$IP_VM\" port=\"7000\" allowmask=\"10.11.12.0/25\" timeout=\"2m\" statshidden=\"no\" hidden=\"no\" sendpass=\"password2\" recvpass=\"password1\">' /home/ubuntu/inspircd-3.6.0/run/conf/links.conf"
 
-# give appropriate name to IRCD leaf just configured 
+# give appropriate name to IRCD leaf just configured
 ssh -i cloud.key ubuntu@$FLOATIP_NEWIRCD -t "sed -i 's/<define name=\"servername\" value=\"change\">/<define name=\"servername\" value=\"ircserver$NEW_ID\">/g' /home/ubuntu/inspircd-3.6.0/run/conf/inspircd.conf"
