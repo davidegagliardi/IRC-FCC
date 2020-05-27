@@ -14,11 +14,11 @@
 P_PROJECTN=IRC-project
 
 #Hub1 Instance Creation
-openstack server create --flavor mini.ubuntu  --image IRC-ServerImage   --network netIRCHub1    --key-name cloudkey   --security-group IRCServer --security-group SSH --security-group PING --wait IRC-Hub-1
+openstack server create --flavor mini.ubuntu  --image IRC-Server   --network netIRCHub1    --key-name cloudkey   --security-group IRCServer --security-group SSH --security-group PING --wait IRC-Hub-1
 #Hub2 Instance Creation
-openstack server create --flavor mini.ubuntu  --image IRC-ServerImage   --network netIRCHub2    --key-name cloudkey   --security-group IRCServer --security-group SSH --security-group PING --wait IRC-Hub-2
+openstack server create --flavor mini.ubuntu  --image IRC-Server   --network netIRCHub2    --key-name cloudkey   --security-group IRCServer --security-group SSH --security-group PING --wait IRC-Hub-2
 #Leaf1 Instance Creation
-openstack server create --flavor mini.ubuntu  --image IRC-ServerImage   --network netIRCLeaves  --key-name cloudkey   --security-group IRCServer --security-group SSH --security-group PING --wait IRC-Leaf-1
+openstack server create --flavor mini.ubuntu  --image IRC-Server   --network netIRCLeaves  --key-name cloudkey   --security-group IRCServer --security-group SSH --security-group PING --wait IRC-Leaf-1
 #WebServer Instance Creation
 openstack server create --flavor micro.ubuntu --image WebServer         --network netWeb        --key-name cloudkey   --security-group WebGroup  --security-group SSH --security-group PING --wait WebServer
 #ClientOper Instance Creation

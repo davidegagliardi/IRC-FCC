@@ -21,6 +21,7 @@ ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.200"
 ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.201"
 ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.220"
 ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.230"
+ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "172.24.4.151"
 
 ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.150"
 ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "172.24.4.200"
@@ -76,5 +77,5 @@ ssh -i cloud.key ubuntu@172.24.4.150 -o StrictHostKeyChecking="accept-new" -t "c
 #ssh -i cloud.key ubuntu@172.24.4.150 -t "cd /home/ubuntu/inspircd-3.6.0/run/ ; ./inspircd stop "
 
 ##Webserver configuration (set hubs's IP address inside /home/ubuntu/sync/syn
-ssh -i cloud.key ubuntu@172.24.4.220 -o StrictHostKeyChecking="accept-new" -t "sed -i '0,/10.11.12.122/s//$IP_HUB1/' /home/ubuntu/sync/sync.sh"
-ssh -i cloud.key ubuntu@172.24.4.220 -o StrictHostKeyChecking="accept-new" -t "sed -i '0,/10.11.12.122/s//$IP_HUB2/' /home/ubuntu/sync/sync.sh"
+ssh -i cloud.key ubuntu@172.24.4.220 -o StrictHostKeyChecking="accept-new" -t "sed -i '0,/10.11.12.8.[[:digit:]]*/s//$IP_HUB1/' /home/ubuntu/sync/sync.sh"
+ssh -i cloud.key ubuntu@172.24.4.220 -o StrictHostKeyChecking="accept-new" -t "sed -i '0,/10.11.12.9.[[:digit:]]*/s//$IP_HUB2/' /home/ubuntu/sync/sync.sh"
