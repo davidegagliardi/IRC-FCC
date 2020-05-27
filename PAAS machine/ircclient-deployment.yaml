@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: ircclient
-        image: craighurley/docker-weechat
+        image: aabriani/docker-weechat:1.1
         ports:
-        - containerPort: 9376
-        command: ["/bin/sh", "-ec", "while :; do echo '.'; sleep 5 ; done"]
+        - containerPort: 6668
+        command: ["/bin/sh", "-c"]
+        args: [ "weechat --run-command \"/set irc.server_default.nicks \"user1,user2,user3,user4,user5,user6,user7,user8,user9,user10,user11,user12,user13,user14,user15,user16,user17,user18,user19,user20\";/set irc.look.temporary_servers on;/exit\" && sleep $((RANDOM % 10)) && weechat-headless --daemon irc://172.24.4.200/#hola; while true; do sleep 30; done;" ]
