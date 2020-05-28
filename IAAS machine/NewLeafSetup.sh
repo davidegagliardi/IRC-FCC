@@ -30,6 +30,7 @@ echo "Waiting for SSH service to be ready!"
 sleep 2m
 ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "$FLOATIP_NEWIRCD"
 ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "$FLOATIP_NEWIRCD"
+ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "$FLOATIP_NEWIRCD"
 # give appropriate name to IRCD leaf just configured
 ssh -i cloud.key ubuntu@$FLOATIP_NEWIRCD -o StrictHostKeyChecking="accept-new" -t "sed -i 's/<define name=\"servername\" value=\"change\">/<define name=\"servername\" value=\"ircserver$NEW_ID\">/g' /home/ubuntu/inspircd-3.6.0/run/conf/inspircd.conf"
 ssh -i cloud.key ubuntu@$FLOATIP_NEWIRCD -o StrictHostKeyChecking="accept-new" -t "sed -i '1i <link name=\"hub1.omega.example.org\" ipaddr=\"$IP_HUB1\" port=\"7000\" allowmask=\"10.11.0.0\/16\" timeout=\"2m\" statshidden=\"no\" hidden=\"no\" sendpass=\"password1\" recvpass=\"password2\">' /home/ubuntu/inspircd-3.6.0/run/conf/links.conf"
