@@ -20,4 +20,35 @@ spec:
         ports:
         - containerPort: 6668
         command: ["/bin/sh", "-c"]
-        args: [ "weechat --run-command \"/set irc.server_default.nicks \"user1,user2,user3,user4,user5,user6,user7,user8,user9,user10,user11,user12,user13,user14,user15,user16,user17,user18,user19,user20\";/set irc.look.temporary_servers on;/exit\" && sleep $((RANDOM % 10)) && weechat-headless --daemon irc://172.24.4.200/#hola; while true; do sleep 30; done;" ]
+        args: [ "weechat --run-command \"/set irc.server_default.nicks \"user1,user2,user3,user4,user5,user6,user7,user8,user9,user10,user11,user12,user13,user14,user15,user16,user17,user18,user19,user20\";/set irc.look.temporary_servers on;/exit\" && sleep $((RANDOM % 10)) && weechat-headless --daemon irc://172.24.4.150/#hola; while true; do sleep $((RANDOM % 10)) && echo 'irc.172.24.4.150.#hola *Hello! I have been spawned by k8s and joined ircserver1.omega.example.com' >/home/user/.weechat/weechat_fifo; sleep 40; done;" ]
+
+
+----------------
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ircclient-deployment
+  labels:
+    app: irc-client
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: irc-client
+  template:
+    metadata:
+      labels:
+        app: irc-client
+    spec:
+      containers:
+      - name: ircclient
+        image: aabriani/docker-weechat:1.1
+        ports:
+        - containerPort: 6668
+        command: ["/bin/sh", "-c"]
+        args: [ "weechat --run-command \"/set irc.server_default.nicks \"user1,user2,user3,user4,user5,user6,user7,user8,user9,user10,user11,user12,user13,user14,user15,user16,user17,user18,user19,user20\";/set irc.look.temporary_servers on;/exit\" && sleep $((RANDOM % 10)) && weechat-headless --daemon irc://172.24.4.150/#hola && sleep $((RANDOM % 30)) && echo 'irc.172.24.4.150.#hola *Hello! I have been spawned by k8s and joined ircserver1.omega.example.com' >/home/user/.weechat/weechat_fifo; while true; do sleep 40; done;" ]
+
+
+## Scale deployment
+#kubectl scale deployment.v1.apps/ircclient-deployment --replicas=10
