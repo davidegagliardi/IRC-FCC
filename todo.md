@@ -8,4 +8,4 @@
 - Wait Leaf Creation [✅ - Davide]
 - Msg clients K8s [✅ - Andrea]
 - (external name service k8s) [⌛]
-- Insert into `eval` home directory all the needed configurations and scripts in both IaaS and PaaS
+- Insert into `eval` home directory all the needed configurations and scripts in both IaaS and PaaS [⌛]
