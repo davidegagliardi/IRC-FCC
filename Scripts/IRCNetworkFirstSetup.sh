@@ -46,5 +46,5 @@ ssh -i cloud.key ubuntu@172.24.4.201 -o StrictHostKeyChecking="accept-new" -t "c
 ##Start Leaf
 ssh -i cloud.key ubuntu@172.24.4.150 -o StrictHostKeyChecking="accept-new" -t "cd /home/ubuntu/inspircd-3.6.0/run/ ; ./inspircd start "
 ##Webserver configuration (set hubs's IP address inside /home/ubuntu/sync/syn
-ssh -i cloud.key ubuntu@172.24.4.220 -o StrictHostKeyChecking="accept-new" -t "sed -i '0,/10.11.12.8.[[:digit:]]*/s//$IP_HUB1/' /home/ubuntu/sync/sync.sh"
-ssh -i cloud.key ubuntu@172.24.4.220 -o StrictHostKeyChecking="accept-new" -t "sed -i '0,/10.11.12.9.[[:digit:]]*/s//$IP_HUB2/' /home/ubuntu/sync/sync.sh"
+ssh -i cloud.key ubuntu@172.24.4.220 -o StrictHostKeyChecking="accept-new" -t "sed -i '0,/10.11.12.8.122/s//$IP_HUB1/' /home/ubuntu/sync/sync.sh"
+ssh -i cloud.key ubuntu@172.24.4.220 -o StrictHostKeyChecking="accept-new" -t "sed -i '0,/10.11.12.9.122/s//$IP_HUB2/' /home/ubuntu/sync/sync.sh"
