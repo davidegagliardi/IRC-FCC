@@ -1,3 +1,4 @@
+#!/bin/bash
 #+----------------------------------------------+
 #|              Univerity of Trento             |
 #|        Cloud and Network Infrastructure      |

@@ -1,3 +1,4 @@
+#!/bin/bash
 #+----------------------------------------------+
 #|              Univerity of Trento             |
 #|        Cloud and Network Infrastructure      |
@@ -8,8 +9,7 @@
 #|    - Davide Gagliardi                        |
 #+----------------------------------------------+
 #Sources
-source Scripts/Sources/login-IRC-admin.sh
-source Scripts/Sources/Variables.sh
+P_PROJECTN=IRC-project
 #Network
 openstack network create netIRCHub1 --project $P_PROJECTN
 openstack network create netIRCHub2 --project $P_PROJECTN

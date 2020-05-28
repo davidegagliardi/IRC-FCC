@@ -1,3 +1,4 @@
+#!/bin/bash
 #+----------------------------------------------+
 #|              Univerity of Trento             |
 #|        Cloud and Network Infrastructure      |
@@ -8,8 +9,7 @@
 #|    - Davide Gagliardi                        |
 #+----------------------------------------------+
 #Sources
-source Scripts/Sources/login-IRC-admin.sh
-source Scripts/Sources/Variables.sh
+P_PROJECTN=IRC-project
 ##Variables extraction
 IP_HUB1=$(openstack server list -c Networks -c Name --format value | grep -Po '10\.11\.8\.[[:digit:]]*')
 IP_HUB2=$(openstack server list -c Networks -c Name --format value | grep -Po '10\.11\.9\.[[:digit:]]*')
