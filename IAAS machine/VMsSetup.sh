@@ -1,6 +1,6 @@
 #!/bin/bash
 #+----------------------------------------------+
-#|              Univerity of Trento             |
+#|              University of Trento             |
 #|        Cloud and Network Infrastructure      |
 #|                  A.Y. 2019/2020              |
 #|         Fog and Cloud Computing Course       |
@@ -8,9 +8,6 @@
 #|    - Andrea Abriani                          |
 #|    - Davide Gagliardi                        |
 #+----------------------------------------------+
-#Sources
-source Scripts/Sources/login-IRC-admin.sh
-source Scripts/Sources/Variables.sh
 #Hub1 Instance Creation
 openstack server create --flavor mini.ubuntu  --image IRC-Server   --network netIRCHub1    --key-name cloudkey   --security-group IRCServer --security-group SSH --security-group PING --wait IRC-Hub-1
 #Hub2 Instance Creation

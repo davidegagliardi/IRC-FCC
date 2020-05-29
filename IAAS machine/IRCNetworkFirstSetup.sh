@@ -1,6 +1,6 @@
 #!/bin/bash
 #+----------------------------------------------+
-#|              Univerity of Trento             |
+#|              University of Trento             |
 #|        Cloud and Network Infrastructure      |
 #|                  A.Y. 2019/2020              |
 #|         Fog and Cloud Computing Course       |
