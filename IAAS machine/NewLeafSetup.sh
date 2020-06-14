@@ -28,7 +28,7 @@ ssh -i cloud.key ubuntu@172.24.4.201 -o StrictHostKeyChecking="accept-new" -t "s
 #Sleep time waiting for SSH be enabled
 echo "Waiting for SSH service to be ready!"
 sleep 2m
-ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "$FLOATIP_NEWIRCD"
+ssh-keygen -f "/home/eval/.ssh/known_hosts" -R "$FLOATIP_NEWIRCD"
 ssh-keygen -f "/home/andrea.abriani-1/.ssh/known_hosts" -R "$FLOATIP_NEWIRCD"
 ssh-keygen -f "/home/davide.gagliardi/.ssh/known_hosts" -R "$FLOATIP_NEWIRCD"
 # give appropriate name to IRCD leaf just configured
